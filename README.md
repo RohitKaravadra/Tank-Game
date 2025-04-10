@@ -19,13 +19,13 @@ It's a learning project, and the code is not fully mature as it was written when
 - <img src="https://www.python.org/static/community_logos/python-logo.png" alt="Python Logo" height="20"/> [Python 3.7+](https://www.python.org/)
 - <img src="https://www.pygame.org/docs/_static/pygame_tiny.png" alt="Pygame Logo" height="20"/> [Pygame](https://www.pygame.org/news) 
 
-To run the game open command prompt and change directory to game folder. Use following commant in commant prompt 
+To run the game open command prompt and change directory to game folder. Use following command
 
 ``` cmd
 python TankGame.py
 ```
 
-Use this for level maker
+Use this command for level maker
 ```cmd
 python LevelMaker.py
 ```
