@@ -5,6 +5,8 @@
 This is a local 2-player tank game built in Python using the Pygame library.
 It's a learning project, and the code is not fully mature as it was written when I had just started exploring game development.
 
+![TankGame Image](Readme/Image1.png)
+
 ## 🚀 Features
 
 - Local Multiplayer with Keyboard and controller inputs
