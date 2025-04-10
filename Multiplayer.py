@@ -99,13 +99,13 @@ def play():
                 elif event.button == 1:
                     Variables.player2.add_bullet(True)
 
-        # update players
-        Variables.player1.update()
-        Variables.player2.update()
 
         # draw all sprites
         Functions.Outline()
         Background()
+        # update players
+        Variables.player1.update()
+        Variables.player2.update()
         all_sprites.draw(Variables.win)
 
         # check if the game is over
