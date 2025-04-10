@@ -5,7 +5,6 @@ import Multiplayer
 import Levels
 import Sounds
 
-Variables.win = pygame.display.set_mode((Variables.DISPLAY_WIDTH, Variables.DISPLAY_HEIGHT), pygame.FULLSCREEN)
 pygame.display.set_caption("TANK WAR")
 
 button1 = Functions.format_text("PLAY", ("xcenter", 360), Variables.CYAN)
@@ -37,14 +36,17 @@ def print_Buttons():
 
 
 def Main_Menu():
-    musicon = False
+    musicOn = False
     button = 0
     while True:
-        if not musicon:
+        if not musicOn:
             Sounds.sounds.music.play(-1)
-            musicon = True
+            musicOn = True
         Variables.Mouse_x, Variables.Mouse_y = pygame.mouse.get_pos()
         for event in pygame.event.get():
+            if  event.type == pygame.QUIT:
+                Sounds.sounds.music.stop()
+                return
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_F11:
                     pygame.display.toggle_fullscreen()
@@ -56,7 +58,7 @@ def Main_Menu():
                         return
                     elif button == 1:
                         Sounds.sounds.music.stop()
-                        musicon = False
+                        musicOn = False
                         Levels.initlevel()
                         Variables.GAMEON = True
                         pygame.mouse.set_visible(False)
@@ -98,10 +100,13 @@ def level_selector():
     current = Variables.current_level
     global buttons
     for i in range(0, total):
-        buttons.append(Functions.format_text("LEVELX", (120, 160 + (40 * i))))
+        buttons.append(Functions.format_text("LEVEL", (120, 160 + (40 * i))))
     while True:
         Functions.Outline()
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                buttons.clear()
+                return Variables.current_level
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     Sounds.sounds.click.play()

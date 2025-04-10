@@ -43,7 +43,7 @@ class particle:
             part.particles.update({i: [pos[0], pos[1], part.dimen[0], part.dimen[1]]})
 
     @classmethod
-    def print(cls):
+    def draw(cls):
         for i in particle.total:
             if i.update():
                 particle.total.remove(i)

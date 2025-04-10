@@ -115,6 +115,18 @@ class players(pygame.sprite.Sprite):
 
         if self.type == "keyboard":
             keys = pygame.key.get_pressed()
+            if keys[pygame.K_w]:
+                self.image = self.up
+            elif keys[pygame.K_s]:
+                self.image = self.down
+            elif keys[pygame.K_d]:
+                self.image = self.right
+            elif keys[pygame.K_a]:
+                self.image = self.left
+            else:
+                return
+        elif self.type == "keyboard2":
+            keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
                 self.image = self.up
             elif keys[pygame.K_DOWN]:
@@ -139,18 +151,6 @@ class players(pygame.sprite.Sprite):
                     self.image = self.right
                 else:
                     return
-        elif self.type == "keyboard2":
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_w]:
-                self.image = self.up
-            elif keys[pygame.K_s]:
-                self.image = self.down
-            elif keys[pygame.K_d]:
-                self.image = self.right
-            elif keys[pygame.K_a]:
-                self.image = self.left
-            else:
-                return
         else:
             return
 

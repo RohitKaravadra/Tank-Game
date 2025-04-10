@@ -1,8 +1,9 @@
+import pygame
+
 from Player_properties import *
 import time
 
-Variables.win = pygame.display.set_mode((Variables.DISPLAY_WIDTH, Variables.DISPLAY_HEIGHT), pygame.FULLSCREEN)
-
+Variables.win = pygame.display.set_mode((Variables.DISPLAY_WIDTH, Variables.DISPLAY_HEIGHT))
 
 def Background():
     pygame.draw.rect(Variables.win, Variables.BLACK, (40, 80, 1200, 600))
@@ -33,7 +34,7 @@ def print_result(all_sprites, winner):
         Functions.Outline()
         Background()
         all_sprites.draw(Variables.win)
-        Particles.particle.print()
+        Particles.particle.draw()
         pygame.display.flip()
         if not len(Particles.particle.total):
             Functions.Outline()
@@ -42,7 +43,7 @@ def print_result(all_sprites, winner):
             Functions.format_text("PLAYER {} WON THE GAME".format(str(winner)), ("xcenter", 30), Variables.YELLOW)
             Functions.format_text("Press ESCAPE / Y - Button To Continue".format(str(winner)), ("xcenter", 60),
                                   Variables.YELLOW, 15)
-            Particles.particle.print()
+            Particles.particle.draw()
             pygame.display.flip()
             while True:
                 for i in pygame.event.get():
@@ -57,6 +58,8 @@ def print_result(all_sprites, winner):
 def play():
     all_sprites = pygame.sprite.Group()
     Variables.player1 = players(pygame.math.Vector2(40, 80), "keyboard", (0, 0, 60, 60), Variables.CYAN)
+
+    # Check if a joystick is connected
     if pygame.joystick.get_count() == 0:
         Variables.player2 = players(pygame.math.Vector2(1180, 620), "keyboard2", (60, 0, 60, 60), Variables.PINK)
     else:
@@ -70,39 +73,51 @@ def play():
         all_sprites.add(Variables.player1.total_bullets)
         all_sprites.add(Variables.player2.total_bullets)
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     return
-                elif event.key == pygame.K_KP0:
-                    Variables.player1.add_bullet()
-                elif event.key == pygame.K_SPACE:
-                    if pygame.joystick.get_count() == 0:
-                        Variables.player2.add_bullet()
-                    else:
-                        Variables.player1.add_bullet()
-                elif event.key == pygame.K_KP1:
+
+                # check inputs for player 1
+                if event.key == pygame.K_b:
                     Variables.player1.add_bullet(True)
-                elif event.key == pygame.K_b:
-                    if pygame.joystick.get_count() == 0:
+                elif event.key == pygame.K_v:
+                    Variables.player1.add_bullet()
+
+                # check inputs for player 2
+                if pygame.joystick.get_count() == 0:
+                    if event.key == pygame.K_RSHIFT:
                         Variables.player2.add_bullet(True)
-                    else:
-                        Variables.player1.add_bullet(True)
+                    elif event.key == pygame.K_RCTRL:
+                        Variables.player2.add_bullet()
+
+            # check joystick input for player 2
             if event.type == pygame.JOYBUTTONDOWN:
                 if event.button == 0:
                     Variables.player2.add_bullet()
                 elif event.button == 1:
                     Variables.player2.add_bullet(True)
-        Functions.Outline()
-        Background()
+
+        # update players
         Variables.player1.update()
         Variables.player2.update()
+
+        # draw all sprites
+        Functions.Outline()
+        Background()
         all_sprites.draw(Variables.win)
+
+        # check if the game is over
         result, winner = check_status()
         if result:
             print_result(all_sprites, winner)
             return
-        Particles.particle.print()
+
+        # update particles
+        Particles.particle.draw()
         pygame.display.flip()
 
+        # update delta time
         Variables.deltaTime = (time.time() - last_time) * Variables.FPS
         last_time = time.time()
