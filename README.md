@@ -11,7 +11,7 @@ It's a learning project, and the code is not fully mature as it was written when
 
 - Local Multiplayer with Keyboard and controller inputs
 - Music and sound effects
-- Particle efects
+- Particle effects
 - Multiple Levels to choose
 - Level Editor to create custom levels
 
